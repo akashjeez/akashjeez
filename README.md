@@ -12,60 +12,77 @@ pip install akashjeezpy
 
 ## Usage
 
-## Check Attributes and Methods available in this package.
-
 ```python
 
 import akashjeezpy
 
+## Check Attributes and Methods available in this package.
 print(dir(akashjeezpy)) # returns list of attributes and methods of this module.
 
-```
-
 ## Service: Greetings to User!
-
-```python
-
-import akashjeezpy
-
-# Pass any name as argument to say_hello() to greet!
 print(akashjeezpy.say_hello()) # returns 'Hello, World!'
 print(akashjeezpy.say_hello("Everyone")) # returns 'Hello, Everyone!'
 
-```
-
 ## Service: Get Cloud Compute Pricing from Public API.
-
-```python
-
-import akashjeezpy
-
 # Syntax: >> cloud_compute_cost(provider, input_cpu, input_memory, input_region)
 # Providers = alibaba, amazon, azure, google 
 # Input Regions = all, US, EU, Asia etc
 print(akashjeezpy.cloud_compute_cost('azure', 2, 4, 'asia'))
 print(akashjeezpy.cloud_compute_cost('amazon', 2, 4, 'us'))
 
-```
-
 ## Service: Get Live & Forecast Weather Report Data for Any Location from Public API.
-
-```python
-
-import akashjeezpy
-
 # Syntax: >> get_weather_data(city_name)
 print(akashjeezpy.get_weather_data('chennai'))
 print(akashjeezpy.get_weather_data('los angeles'))
 
+
+## Service: Get Country Info like COuntry Code, capital, ISO & Phone Code using Public API .
+print(akashjeezpy.get_country_info())
+
+## Service: Get New Comic Book Data using Public API.
+print(akashjeezpy.comic_books_data())
+
+## Service: Get Movie Infromation using Public API.
+# Syntax: >> movie_search(movie_name)
+print(akashjeezpy.movie_search('furious'))
+
+## Service: Get a Random Fake User Data using Public API.
+print(akashjeezpy.random_user_generator())
+
+## Service: Get All Cars Makers & Manufacturers Data using Public API.
+print(akashjeezpy.car_maker_manufacturers())
+
+## Service: Get Latest Nobel Prize Data using Public API.
+print(akashjeezpy.get_nobel_prize())
+
+## Service: Get All File Formats Data using Public API.
+print(akashjeezpy.file_formats())
+
+## Service: Get Latest Open Trivia Q&A Data using Public API.
+print(akashjeezpy.open_trivia()
+
+## Service: Get Latest & Upcoming Movies Type & Name Data from BookMyShow.com
+# Syntax: >> bookmyshow(city_name)
+print(akashjeezpy.bookmyshow('chennai'))
+
+## Service: Search Public DNS Info from http://dns.google.com
+print(akashjeezpy.dns_search('akashjeez.herokuapp.com')
+
+## Serice: Shuffle of Cards Randomly!
+print(akashjeezpy.shuffle_cards())
+
+## Service: Calculate Age by Passing Date of Birth as Input.
+# Syntax: >> age_calculator(input_dob)
+print(akashjeezpy.age_calculator('10-04-1993'))
+
+
 ```
 
 
-
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull Requests are Welcome. For Major Changes, Please Open an issue First to Discuss What You Would like to Change.
 
-Please make sure to update tests as appropriate.
+Please Make Sure to Update Tests as Appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
