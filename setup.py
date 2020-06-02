@@ -5,7 +5,7 @@ with open("README.md", 'r') as fh:
 
 setup(
     name = 'akashjeezpy',
-    version = '0.0.3',
+    version = '0.0.1',
     author = 'akashjeez',
     author_email = 'akashit63@gmail.com',
     url = 'https://github.com/akashjeez/akashjeezpy',
