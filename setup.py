@@ -8,7 +8,7 @@ setup(
     version = '0.0.1',
     author = 'akashjeez',
     author_email = 'akashit63@gmail.com',
-    url = 'https://github.com/akashjeez/akashjeezpy',
+    url = 'https://github.com/akashjeez/akashjeez',
     description = 'A Python Package to Deliver a Lot of Useful Services!',
     long_description = long_description,
     long_description_content_type = 'text/markdown',
