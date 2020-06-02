@@ -4,16 +4,76 @@ import requests, pandas
 import re, random, itertools
 from datetime import datetime, timedelta
 
+
+def covid19_usa_stats():
+	'''Get LIVE CoronaVirus Stats From United States of America!'''
+	try:
+		response = requests.get("https://corona.lmao.ninja/v2/states")
+		dataset = [{
+			'state': data.get('state', 'TBD'), 
+			'total_cases': data.get('cases', 'TBD'), 
+			'today_cases': data.get('todayCases', 'TBD'), 
+			'total_deaths': data.get('deaths', 'TBD'), 
+			'today_deaths': data.get('todayDeaths', 'TBD'), 
+			'acive_cases': data.get('active', 'TBD'), 
+		} for data in response.json()]
+		return {'count': len(dataset), 'data': dataset}
+	except Exception as ex:
+		return {"Error": ex}
+
+
+def covid19_stats():
+	'''Get LIVE CoronaVirus Stats From All Over Globe!'''
+	try:
+		BASE_URL = "https://covid.ourworldindata.org/data"
+		covid_data = pandas.read_csv(f"{BASE_URL}/ecdc/full_data.csv")
+		population_data = pandas.read_csv(f"{BASE_URL}/ecdc/locations.csv")
+		new_df = pandas.merge(covid_data, population_data, on = 'location', how = 'left')
+		new_df.drop(['countriesAndTerritories', 'population'], axis = 1, inplace = True)
+		new_df = new_df[ new_df.population_year == 2020.0]
+		new_df['population_year'] = new_df['population_year'].astype(int)
+		dataset = [{
+			'date': data[0], 
+			'country': data[1], 
+			'new_cases': data[2], 
+			'new_deaths': data[3], 
+			'total_cases': data[4], 
+			'total_deaths': data[5], 
+			'continent': data[6]
+		} for data in new_df.values.tolist() ]
+		return {'count': len(dataset), 'data': dataset}
+	except Exception as ex:
+		return {"Error": ex}
+
+def google_place(location):
+	'''Get Coordinates From Google for Input Location'''
+	try:
+		BASE_URL, API_KEY = 'https://maps.googleapis.com/maps/api', 'AIzaSyDCpf9LE6ZnVxzTxC6TbZ3Dc_Ro91pdra4'
+		request_url = f"{BASE_URL}/place/findplacefromtext/json?input={location.replace(' ', '+')}"
+		request_url += f"&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry"
+		response = requests.get(f"{request_url}&key={API_KEY}").json()
+		dataset = {
+			'name': response['candidates'][0].get('name', 'TBD'), 
+			'address': response['candidates'][0].get('formatted_address', 'TBD'),
+			'open_now?': response['candidates'][0]['opening_hours'].get('open_now', 'TBD'), 
+			'coordinates': response['candidates'][0]['geometry'].get('location', 'TBD'),
+			'rating': response['candidates'][0].get('rating', 'TBD'),
+		} if response['status'] == 'OK' else {'error': 'Invalid Requests / Zero Results!'}
+		return dataset
+	except Exception as ex:
+		return f"Error: {ex}"
+
+
 def public_holidays(country):
 	''' Get Public Holidays for a Country using Public API '''
 	try:
-		base_url, dataset, year = "https://date.nager.at", [], datetime.now().year
-		data_dump_1 = pandas.read_html(f"{base_url}/Home/Countries")[0].values.tolist()
+		BASE_URL, dataset, year = "https://date.nager.at", [], datetime.now().year
+		data_dump_1 = pandas.read_html(f"{BASE_URL}/Home/Countries")[0].values.tolist()
 		countries_dict = {data[0]: data[1] for data in data_dump_1 if data[0] != 'Namibia' }
 		print(f"\n Countries: \n {countries_dict} \n")
 		for country_name, country_code in countries_dict.items():
 			if country_name.startswith(country.capitalize()):
-				data_dump_2 = requests.get(f"{base_url}/api/v2/PublicHolidays/{year}/{country_code}")
+				data_dump_2 = requests.get(f"{BASE_URL}/api/v2/PublicHolidays/{year}/{country_code}")
 				dataset = [{
 					'country_name': country_name,
 					'holiday_date': data['date'], 
@@ -29,14 +89,14 @@ def public_holidays(country):
 def fuel_price():
 	''' Get Live Fuel (Petrol, Diesel) Price in India from https://www.goodreturns.in '''
 	try:
-		base_url = "https://www.goodreturns.in"
-		data_dump_1 = pandas.read_html(f"{base_url}/petrol-price.html")[0].values.tolist()[1:]
-		data_dump_2 = pandas.read_html(f"{base_url}/diesel-price.html")[0].values.tolist()[1:]
+		BASE_URL = "https://www.goodreturns.in"
+		data_dump_1 = pandas.read_html(f"{BASE_URL}/petrol-price.html")[0].values.tolist()[1:]
+		data_dump_2 = pandas.read_html(f"{BASE_URL}/diesel-price.html")[0].values.tolist()[1:]
 		dataset = [{
 			'state': data[0][0], 'petrol_price_today': data[0][1], 'petrol_price_yesterday': data[0][2],
 			'diesel_price_today': data[1][1], 'diesel_price_yesterday': data[1][2]
 		} for data in zip(data_dump_1, data_dump_2)]
-		return {'count': len(dataset), 'data': dataset.update(datetime.now().strftime('%d-%M-%Y'))}
+		return {'count': len(dataset), 'last_updated': datetime.now().strftime('%d-%b-%Y'), 'data': dataset}
 	except Exception as ex:
 		return f"Error: {ex}"
 
@@ -159,9 +219,9 @@ def get_nobel_prize():
 def car_maker_manufacturers():
 	''' Get All Cars Makers & Manufacturers Data using Public API (https://vpic.nhtsa.dot.gov/api) '''
 	try:
-		base_url = "https://vpic.nhtsa.dot.gov/api/vehicles"
-		response_1 = requests.get(f"{base_url}/getallmakes?format=json").json()
-		response_2 = requests.get(f"{base_url}/getallmanufacturers?format=json").json()
+		BASE_URL = "https://vpic.nhtsa.dot.gov/api/vehicles"
+		response_1 = requests.get(f"{BASE_URL}/getallmakes?format=json").json()
+		response_2 = requests.get(f"{BASE_URL}/getallmanufacturers?format=json").json()
 		return {'makers': response_1['Results'], 'manufacturers': response_2['Results']}
 	except Exception as ex:
 		return f"Error: {ex}"
@@ -242,11 +302,11 @@ def cloud_compute_cost(provider, input_cpu, input_memory, input_region):
 	'''
 	try:
 		dataset = []
-		base_url = "https://banzaicloud.com/cloudinfo/api/v1/providers"
-		regions_data = requests.get(f"{base_url}/{provider.casefold()}/services/compute/regions").json()
+		BASE_URL = "https://banzaicloud.com/cloudinfo/api/v1/providers"
+		regions_data = requests.get(f"{BASE_URL}/{provider.casefold()}/services/compute/regions").json()
 		regions_data = [{'id': data['id'], 'name': data['name']} for data in regions_data if data['id'] != 'uaenorth']
 		for region in regions_data:
-			response = requests.get(f"{base_url}/{provider.casefold()}/services/compute/regions/{region['id']}/products").json()
+			response = requests.get(f"{BASE_URL}/{provider.casefold()}/services/compute/regions/{region['id']}/products").json()
 			for product in response['products']:
 				data = {
 					'category': product['category'], 
@@ -271,10 +331,10 @@ def cloud_compute_cost(provider, input_cpu, input_memory, input_region):
 def get_weather_data(city_name):
 	''' Get Live & Forecast Weather Report Data for Any Location from Public API (https://metaweather.com/api/)'''
 	try:
-		base_url = "https://www.metaweather.com/api/location"
-		response_1 = requests.get(f"{base_url}/search", params = {'query': city_name.lower()}).json()
+		BASE_URL = "https://www.metaweather.com/api/location"
+		response_1 = requests.get(f"{BASE_URL}/search", params = {'query': city_name.lower()}).json()
 		if len(response_1):
-			response_2 = requests.get(f"{base_url}/{response_1[0]['woeid']}/").json()
+			response_2 = requests.get(f"{BASE_URL}/{response_1[0]['woeid']}/").json()
 			dataset = {
 				"location_id": response_2['woeid'],
 				"location_name": response_2['title'],
