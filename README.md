@@ -23,6 +23,16 @@ print(dir(akashjeezpy)) # returns list of attributes and methods of this module.
 print(akashjeezpy.say_hello()) # returns 'Hello, World!'
 print(akashjeezpy.say_hello("Everyone")) # returns 'Hello, Everyone!'
 
+## Service: Get Coordinates From Google for Input Location
+# Syntax: >> google_place(location)
+print(akashjeezpy.google_place('queensland chennai'))
+
+## Service: Get LIVE CoronaVirus Stats From United States of America!
+print(akashjeezpy.covid19_usa_stats())
+
+## Service: Get LIVE CoronaVirus Stats From All Over Globe!
+print(akashjeezpy.covid19_stats())
+
 ## Service: Get Cloud Compute Pricing from Public API.
 # Syntax: >> cloud_compute_cost(provider, input_cpu, input_memory, input_region)
 # Providers = alibaba, amazon, azure, google 
@@ -34,7 +44,6 @@ print(akashjeezpy.cloud_compute_cost('amazon', 2, 4, 'us'))
 # Syntax: >> get_weather_data(city_name)
 print(akashjeezpy.get_weather_data('chennai'))
 print(akashjeezpy.get_weather_data('los angeles'))
-
 
 ## Service: Get Country Info like COuntry Code, capital, ISO & Phone Code using Public API .
 print(akashjeezpy.get_country_info())
@@ -74,7 +83,6 @@ print(akashjeezpy.shuffle_cards())
 ## Service: Calculate Age by Passing Date of Birth as Input.
 # Syntax: >> age_calculator(input_dob)
 print(akashjeezpy.age_calculator('10-04-1993'))
-
 
 ```
 
