@@ -5,7 +5,7 @@ with open("README.md", 'r') as fh:
 
 setup(
     name = 'akashjeezpy',
-    version = '0.0.2',
+    version = '0.0.3',
     author = 'akashjeez',
     author_email = 'akashit63@gmail.com',
     url = 'https://github.com/akashjeez/akashjeezpy',
@@ -18,7 +18,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires = '>=3.4',
-    install_requires = ['requests'],
+    install_requires = ['requests', 'pandas'],
     py_modules = ['akashjeezpy'],
     package_dir = {'': 'src'}
 )
