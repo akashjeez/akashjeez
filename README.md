@@ -4,7 +4,7 @@ akashjeez is a Python Package to Deliver a Lot of Useful Services!
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install akashjeez.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to Install akashjeez.
 
 ```bash
 pip install akashjeez
