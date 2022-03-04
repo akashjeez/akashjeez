@@ -19,5 +19,5 @@
 
 ## Websites
 
-#### All-in-One Site - https://linktr.ee/akashjeez
-#### Akashjeez - https://akashjeez.herokuapp.com
+- All-in-One Site -> https://linktr.ee/akashjeez
+- Akashjeez -> https://akashjeez.herokuapp.com
