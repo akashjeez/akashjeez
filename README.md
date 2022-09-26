@@ -1,5 +1,5 @@
 <h1 align = "center">Hi 👋, I'm <b> Akash </b> </h1>
-<h3 align = "center"> Cloud Engineer II in Honeywell </h3>
+<h3 align = "center"> Advanced Cyber Security Architect in Honeywell </h3>
 
 ## Skills
 
